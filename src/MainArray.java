@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
  * (just run, no need to understand)
  */
 public class MainArray {
-    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage(); // final все что внутри класса не изменяется, не наслед. и не переназнач.
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException { // метод при котором throws - выбрасывает исключения
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
