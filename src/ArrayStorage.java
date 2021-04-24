@@ -4,12 +4,14 @@
 
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    int emptyPlace;
     int saveCounterResume;
     int sizeStorage;
-
+    int getAllCounter;
     void clear() {
-        for (Resume resume : storage) { // обнуляем каждую ячейку storage
-            resume = null;
+        while(emptyPlace <= sizeStorage) { // обнуляем каждую занятую ячейку storage
+            storage[emptyPlace] = null;
+            emptyPlace++;
         }
     }
 
@@ -22,8 +24,8 @@ public class ArrayStorage {
         }
     }
 
-    Resume get(String uuid) {
-        return null;
+     Resume get(String uuid) {
+         return storage[saveCounterResume];
     }
 
     void delete(String uuid) {
@@ -34,7 +36,10 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return new Resume[sizeStorage];
+        for (int i = 0; i <= sizeStorage; i++) {
+            getAllCounter = i;
+        }
+        return new Resume[getAllCounter];
     }
 
     int size() {
