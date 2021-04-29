@@ -35,21 +35,21 @@ public class ArrayStorage {
         return storage[i];
     }
 
-    void delete(String uuid) {
-        uuid = null;
-    }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    Resume[] getAll() {
-        for(int i = 0; i < resumeNumbers; i++) {
-            System.out.println(storage[i]);
-        }
-        return null;
-    }
-
-    int size() {
-        return resumeNumbers;
-    }
+//    void delete(String uuid) {
+//        uuid = null;
+//    }
+//
+//    /**
+//     * @return array, contains only Resumes in storage (without null)
+//     */
+//    Resume[] getAll() {
+//        for(int i = 0; i < resumeNumbers; i++) {
+//            System.out.println(storage[i]);
+//        }
+//        return null;
+//    }
+//
+//    int size() {
+//        return resumeNumbers;
+//    }
 }
