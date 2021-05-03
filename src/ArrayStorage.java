@@ -30,6 +30,11 @@ public class ArrayStorage {
     Resume get(String uuid) {
         int i = 0;
 
+        if (!uuid.contains("uuid")) {
+            System.out.println(uuid + " is incorrect id");
+            return null;
+        }
+
         while (storage[i].uuid != uuid) { // содержание информации в i-ом элементе массива
             i++;
         }
