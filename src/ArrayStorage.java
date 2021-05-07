@@ -12,39 +12,36 @@ public class ArrayStorage {
     int resumeNumbers;
 
     void clear() {
-        while (resumeNumbers != 0) { // обнуляем каждую занятую ячейку storage
-            storage[resumeNumbers] = null;
-            resumeNumbers--;
+        for (int i = 0; i <= resumeNumbers; i++) { // обнуляем каждую занятую ячейку storage
+            storage[i] = null;
         }
+        resumeNumbers = 0;
     }
 
-    void save(Resume r) { // тип рюземе содержит строку
-        if (storage[resumeNumbers] == null) { // если в ячейке под индексом resumeNumbers пусто
-            storage[resumeNumbers] = r; // вставляем в пустую ячейку резюме
-            resumeNumbers++;
-        } else {
-            System.out.println("Resume storage is full");
-        }
+    void save(Resume r) {
+        storage[resumeNumbers] = r; // вставляем в пустую ячейку резюме
+        resumeNumbers++;
     }
 
     Resume get(String uuid) {
         int i = 0;
 
-        if (!uuid.contains("uuid")) {
-            System.out.println(uuid + " is incorrect id");
+        if (i > resumeNumbers) {
             return null;
         }
 
-        while (storage[i].uuid != uuid) { // содержание информации в i-ом элементе массива
-            i++;
+        while (i < resumeNumbers) {
+            if (storage[i].uuid != uuid) {
+                i++;
+            } else return storage[i];
         }
-        return storage[i];
+        return null;
     }
 
     void delete(String uuid) {
         int i = 0;
 
-        while (storage[i].uuid != uuid) { // содержание информации в i-ом элементе массива
+        while (storage[i].uuid != uuid) {
             i++;
         }
         storage[i] = null;
@@ -59,9 +56,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] allResumes = new Resume[resumeNumbers];
-        allResumes = Arrays.copyOf(storage, resumeNumbers);
-        return allResumes;
+        return Arrays.copyOf(storage, resumeNumbers);
     }
 
     int size() {
