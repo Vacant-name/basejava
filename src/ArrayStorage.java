@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
  */
 
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    Resume[] storage = new Resume[3];
     int resumeNumbers;
 
     void clear() {
-        for (int i = 0; i <= resumeNumbers; i++) { // обнуляем каждую занятую ячейку storage
+        for (int i = 0; i < resumeNumbers; i++) { // обнуляем каждую занятую ячейку storage
             storage[i] = null;
         }
         resumeNumbers = 0;
@@ -26,11 +26,7 @@ public class ArrayStorage {
     Resume get(String uuid) {
         int i = 0;
 
-        if (i > resumeNumbers) {
-            return null;
-        }
-
-        while (i < resumeNumbers) {
+        while (i + 1 < resumeNumbers) {
             if (storage[i].uuid != uuid) {
                 i++;
             } else return storage[i];
@@ -41,12 +37,14 @@ public class ArrayStorage {
     void delete(String uuid) {
         int i = 0;
 
-        while (storage[i].uuid != uuid) {
-            i++;
+        if (storage[i].uuid != uuid) {
+            for (int j = 0; j <= resumeNumbers; j++) {
+                i = j;
+            }
         }
         storage[i] = null;
 
-        while (storage[i + 1] != null) { // сдвигаем все резюме на одну позицию влево на место удаленного
+        while (i + 1 != resumeNumbers) { // сдвигаем все резюме на одну позицию влево на место удаленного
             storage[i] = storage[i + 1];
             i++;
         }
