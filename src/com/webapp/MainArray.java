@@ -1,15 +1,20 @@
+package com.webapp;
+
+import com.webapp.model.Resume;
+import com.webapp.storage.ArrayStorage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for com.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
-    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage(); // final все что внутри класса не изменяется, не наслед. и не переназнач.
+    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
-    public static void main(String[] args) throws IOException { // метод при котором throws - выбрасывает исключения
+    public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
@@ -32,7 +37,7 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
