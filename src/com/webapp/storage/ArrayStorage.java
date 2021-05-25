@@ -9,88 +9,72 @@ import java.util.Arrays;
  */
 
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    int sizeStorage;
+    private final Resume[] storage = new Resume[10_000];
+    private int sizeStorage;
 
     public void clear() {
         // обнуляем каждую занятую ячейку storage
-        for (int i = 0; i < sizeStorage; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage,null);
         sizeStorage = 0;
     }
 
-    public void save(Resume resume) {
-        boolean isEmpty = false;
+    public void save(Resume resume) { // not working
 
-        while (!isEmpty) {
+        for (int i = 0; i <= sizeStorage; i++) {
+
             if (sizeStorage == storage.length) {
-                System.out.println(resume + " storage is full");
-            } else
-                for (int i = 0; i <= sizeStorage; i++) {
-                    if (storage[i] == null) {
-                        break;
-                    } else if (storage[i].getUuid().equals(resume.getUuid())) {
-                        System.out.println(resume + " storage already contains this resume");
-                        break;
-                    }
-                }
-            isEmpty = true;
+                System.out.println("storage is full");
+                break;
+            }
+            if (storage[i] == null) {
+                storage[i] = resume;
+                sizeStorage++;
+                System.out.println(resume + " resume was saved");
+                break;
+            }
+            if (storage[i].getUuid().equals(resume.getUuid())) {
+                System.out.println(resume + " storage already contains this resume");
+                break;
+            }
         }
-
-        int i = 0;
-
-        while (storage[i] != null | i <= sizeStorage ) {
-            sizeStorage++;
-        }
-        storage[i] = resume;
-        System.out.println(resume + " resume was saved");
     }
 
     public void update(Resume resume) {
-        int i = 0;
 
-        while (i < sizeStorage) {
+        for (int i = 0; i < sizeStorage; i++) {
             if (storage[i].getUuid().equals(resume.getUuid())) {
                 storage[i] = resume;
                 System.out.println(resume + " resume was updated");
                 break;
             }
-            i++;
-        }
-
-        if (i > sizeStorage) {
-            System.out.println(resume + " resume not found");
+            if (i > sizeStorage) {
+                System.out.println(resume + " resume not found");
+            }
         }
     }
 
     public Resume get(String uuid) {
-        int i = 0;
 
-        while (i < sizeStorage) {
-            if (!storage[i].getUuid().equals(uuid)) {
-                i++;
-            } else return storage[i];
+        for (int i = 0; i < sizeStorage; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                return storage[i];
+            }
         }
         return null;
     }
 
     public void delete(String uuid) {
-        int i = 0;
 
-        while (i < sizeStorage) {
+        for (int i = 0; i < sizeStorage; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                // резюме которое хотим удалить заменятся на резюме стоящее последнем в хранилище
-                storage[i] = storage[sizeStorage];
+                storage[i] = storage[sizeStorage - 1];
                 sizeStorage--;
                 System.out.println(uuid + " was deleted");
                 break;
-            } else
-                i++;
-        }
-
-        if (i > sizeStorage) {
-            System.out.println(uuid + " resume not found");
+            }
+            if (i > sizeStorage) {
+                System.out.println(uuid + " resume not found");
+            }
         }
     }
 
