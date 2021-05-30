@@ -13,15 +13,12 @@ public class ArrayStorage {
     private int sizeStorage;
 
     public void clear() {
-        // обнуляем каждую занятую ячейку storage
-        Arrays.fill(storage,null);
+        Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
     }
-
-    public void save(Resume resume) { // not working
+    public void save(Resume resume) {
 
         for (int i = 0; i <= sizeStorage; i++) {
-
             if (sizeStorage == storage.length) {
                 System.out.println("storage is full");
                 break;
@@ -38,7 +35,6 @@ public class ArrayStorage {
             }
         }
     }
-
     public void update(Resume resume) {
 
         for (int i = 0; i < sizeStorage; i++) {
@@ -52,7 +48,6 @@ public class ArrayStorage {
             }
         }
     }
-
     public Resume get(String uuid) {
 
         for (int i = 0; i < sizeStorage; i++) {
@@ -62,7 +57,6 @@ public class ArrayStorage {
         }
         return null;
     }
-
     public void delete(String uuid) {
 
         for (int i = 0; i < sizeStorage; i++) {
@@ -77,14 +71,12 @@ public class ArrayStorage {
             }
         }
     }
-
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, sizeStorage);
     }
-
     public int size() {
         return sizeStorage;
     }
