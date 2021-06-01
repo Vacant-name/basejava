@@ -11,31 +11,40 @@ import java.util.Arrays;
 public class ArrayStorage {
     private final Resume[] storage = new Resume[10_000];
     private int sizeStorage;
+    private int index = 0;
 
+    public void searchIndex(Resume resume) {
+
+        for (int i = 0; i <= sizeStorage; i++) {
+            if (sizeStorage == storage.length) {
+                System.out.println("storage is full");
+                index = -1;
+                break;
+            }
+            if (storage[i] == null) {
+                index = i;
+                break;
+            }
+            if (storage[i].getUuid().equals(resume.getUuid())) {
+                System.out.println(resume + " storage already contains this resume");
+                index = i;
+                break;
+            }
+        }
+    }
     public void clear() {
         Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
     }
     public void save(Resume resume) {
+        searchIndex(resume);
 
-        for (int i = 0; i <= sizeStorage; i++) {
-            if (sizeStorage == storage.length) {
-                System.out.println("storage is full");
-                break;
-            }
-            if (storage[i] == null) {
-                storage[i] = resume;
-                sizeStorage++;
-                System.out.println(resume + " resume was saved");
-                break;
-            }
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                System.out.println(resume + " storage already contains this resume");
-                break;
-            }
-        }
+        storage[index] = resume;
+        sizeStorage++;
+        System.out.println(resume + " resume was saved");
     }
     public void update(Resume resume) {
+        searchIndex(resume);
 
         for (int i = 0; i < sizeStorage; i++) {
             if (storage[i].getUuid().equals(resume.getUuid())) {
