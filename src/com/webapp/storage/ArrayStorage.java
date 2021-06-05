@@ -11,26 +11,23 @@ import java.util.Arrays;
 public class ArrayStorage {
     private final Resume[] storage = new Resume[10_000];
     private int sizeStorage;
-    private int index = 0;
 
-    public void searchIndex(Resume resume) {
+    public int searchIndex(Resume resume) {
 
         for (int i = 0; i <= sizeStorage; i++) {
             if (sizeStorage == storage.length) {
                 System.out.println("storage is full");
-                index = -1;
                 break;
             }
             if (storage[i] == null) {
-                index = i;
-                break;
+                return i;
             }
             if (storage[i].getUuid().equals(resume.getUuid())) {
                 System.out.println(resume + " storage already contains this resume");
-                index = i;
-                break;
+                return i;
             }
         }
+        return sizeStorage++;
     }
     public void clear() {
         Arrays.fill(storage, 0, sizeStorage, null);
@@ -39,22 +36,23 @@ public class ArrayStorage {
     public void save(Resume resume) {
         searchIndex(resume);
 
-        storage[index] = resume;
-        sizeStorage++;
-        System.out.println(resume + " resume was saved");
+        if (sizeStorage == storage.length) {
+            System.out.println("storage is full");
+        }
+        if (storage[searchIndex(resume)] == null  | searchIndex(resume) == sizeStorage++) {
+            storage[searchIndex(resume)] = resume;
+            sizeStorage++;
+            System.out.println(resume + " resume was saved");
+        }
     }
     public void update(Resume resume) {
         searchIndex(resume);
 
-        for (int i = 0; i < sizeStorage; i++) {
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                storage[i] = resume;
-                System.out.println(resume + " resume was updated");
-                break;
-            }
-            if (i > sizeStorage) {
-                System.out.println(resume + " resume not found");
-            }
+        if (storage[searchIndex(resume)] == resume) {
+            storage[searchIndex(resume)] = resume;
+            System.out.println(resume + " resume was updated");
+        } else {
+            System.out.println(resume + " resume not found");
         }
     }
     public Resume get(String uuid) {
