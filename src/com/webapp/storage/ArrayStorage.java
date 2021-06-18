@@ -18,22 +18,22 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        searchIndex(resume, null);
+        searchIndex(resume.getUuid());
 
-        int index = searchIndex(resume, null);
+        int index = searchIndex(resume.getUuid());
         if (index >= 0) {
-            storage[index] = resume;
+            System.out.println(resume + " storage already contains this resume");
+        } else {
+            storage[sizeStorage] = resume;
             sizeStorage++;
             System.out.println(resume + " resume was saved");
-        } else {
-            System.out.println(resume + " storage already contains this resume");
         }
     }
 
     public void update(Resume resume) {
-        searchIndex(resume, null);
+        searchIndex(resume.getUuid());
 
-        int index = searchIndex(resume, null);
+        int index = searchIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
             System.out.println(resume + " resume was updated");
@@ -43,18 +43,18 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        searchIndex(null, uuid);
+        searchIndex(uuid);
 
-        int index = searchIndex(null, uuid);
+        int index = searchIndex(uuid);
         if (index >= 0) {
             return storage[index];
         } else return null;
     }
 
     public void delete(String uuid) {
-        searchIndex(null, uuid);
+        searchIndex(uuid);
 
-        int index = searchIndex(null, uuid);
+        int index = searchIndex(uuid);
         if (index >= 0) {
             storage[index] = storage[sizeStorage - 1];
             sizeStorage--;
@@ -74,19 +74,13 @@ public class ArrayStorage {
         return sizeStorage;
     }
 
-    private int searchIndex(Resume resume, String uuid) {
+    private int searchIndex(String uuid) {
         for (int i = 0; i <= sizeStorage; i++) {
             if (sizeStorage == storage.length) {
                 System.out.println("storage is full");
                 break;
             }
-            if (storage[i] == null) { // where does it put?
-                return i;
-            }
-            if (resume != null && storage[i].getUuid().equals(resume.getUuid())) {
-                return i;
-            }
-            if (storage[i].getUuid().equals(uuid)) {
+            if (storage[i] != null && storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
