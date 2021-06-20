@@ -18,42 +18,42 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        searchIndex(resume.getUuid());
-
-        int index = searchIndex(resume.getUuid());
-        if (index >= 0) {
-            System.out.println(resume + " storage already contains this resume");
+        if (sizeStorage == storage.length) {
+            System.out.println("storage is full");
         } else {
-            storage[sizeStorage] = resume;
-            sizeStorage++;
-            System.out.println(resume + " resume was saved");
+            int index = searchIndex(resume.getUuid());
+            if (index >= 0) {
+                System.out.println(resume + " storage already contains this resume");
+            } else {
+                storage[sizeStorage] = resume;
+                sizeStorage++;
+                System.out.println(resume + " resume saved");
+            }
         }
     }
 
     public void update(Resume resume) {
-        searchIndex(resume.getUuid());
-
         int index = searchIndex(resume.getUuid());
-        if (index >= 0) {
+        if (index == sizeStorage) {
+            System.out.println("storage is full");
+        } else if (index >= 0) {
             storage[index] = resume;
-            System.out.println(resume + " resume was updated");
-        } else {
+            System.out.println(resume + " resume updated");
+        } else
             System.out.println(resume + " resume not found");
-        }
     }
 
     public Resume get(String uuid) {
-        searchIndex(uuid);
 
         int index = searchIndex(uuid);
         if (index >= 0) {
+            System.out.println("Resume " + uuid + " found");
             return storage[index];
-        } else return null;
+        } else System.out.println("Resume " + uuid + " not found");
+        return null;
     }
 
     public void delete(String uuid) {
-        searchIndex(uuid);
-
         int index = searchIndex(uuid);
         if (index >= 0) {
             storage[index] = storage[sizeStorage - 1];
@@ -75,12 +75,8 @@ public class ArrayStorage {
     }
 
     private int searchIndex(String uuid) {
-        for (int i = 0; i <= sizeStorage; i++) {
-            if (sizeStorage == storage.length) {
-                System.out.println("storage is full");
-                break;
-            }
-            if (storage[i] != null && storage[i].getUuid().equals(uuid)) {
+        for (int i = 0; i < sizeStorage; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
