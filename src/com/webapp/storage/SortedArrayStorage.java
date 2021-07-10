@@ -1,44 +1,36 @@
 package com.webapp.storage;
 
 import com.webapp.model.Resume;
-
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    //sub class
-    @Override
-    public void clear() {
-        Arrays.fill(storage, 0, sizeStorage, null);
-        sizeStorage = 0;
+
+    public int size() {
+        return sizeStorage;
     }
 
-    @Override
-    public void update(Resume r) {
-        int index = searchIndex(r.getUuid());
-        if (index >= 0) {
-            storage[index] = r;
-            System.out.println(r + " resume updated");
-        } else
-            System.out.println(r + " resume not found");
-    }
-
-    @Override
-    public void save(Resume r) {
+    public void save(Resume resume) {
         if (sizeStorage == storage.length) {
             System.out.println("storage is full");
         } else {
-            int index = searchIndex(r.getUuid());
-            if (index >= 0) {
-                System.out.println(r + " storage already contains this resume");
-            } else {
-                storage[sizeStorage] = r;
-                sizeStorage++;
-                System.out.println(r + " resume saved");
-            }
+            int index = searchIndex(resume.getUuid());
+
+            System.out.println(index + " storage already contains this resume");
+            storage[sizeStorage] = resume;
+            sizeStorage++;
+            System.out.println(resume + " resume saved");
         }
     }
 
-    @Override
+    public void update(Resume resume) {
+        int index = searchIndex(resume.getUuid());
+        if (index >= 0) {
+            storage[index] = resume;
+            System.out.println(resume + " resume updated");
+        } else
+            System.out.println(resume + " resume not found");
+    }
+
     public void delete(String uuid) {
         int index = searchIndex(uuid);
         if (index >= 0) {
@@ -50,12 +42,15 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, sizeStorage);
+    public void clear() {
+        Arrays.fill(storage, 0, sizeStorage, null);
+        sizeStorage = 0;
     }
 
-    @Override
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, sizeStorage);
+    }
+
     protected int searchIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);

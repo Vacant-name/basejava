@@ -2,22 +2,21 @@ package com.webapp;
 
 import com.webapp.model.Resume;
 import com.webapp.storage.SortedArrayStorage;
-import com.webapp.storage.Storage;
 
 
 /**
  * Test for your com.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final Storage ARRAY_STORAGE = new SortedArrayStorage();
+    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
-        r1.setUuid("uuid1");
+        r1.setUuid("uuid3");
         Resume r2 = new Resume();
-        r2.setUuid("uuid2");
+        r2.setUuid("uuid1");
         Resume r3 = new Resume();
-        r3.setUuid("uuid3");
+        r3.setUuid("uuid2");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
