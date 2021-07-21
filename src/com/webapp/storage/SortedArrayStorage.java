@@ -23,11 +23,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public Resume get(String uuid) {
-        return null;
-    }
-
-    @Override
     protected int searchIndex(String uuid) {
         Resume expectedPosition = new Resume();
         expectedPosition.setUuid(uuid);

@@ -43,15 +43,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    public Resume get(String uuid) {
-        int index = searchIndex(uuid);
-        if (index >= 0) {
-            System.out.println("Resume " + uuid + " found");
-            return storage[index];
-        } else System.out.println("Resume " + uuid + " not found");
-        return null;
-    }
-
     protected int searchIndex(String uuid) {
         for (int i = 0; i < sizeStorage; i++) {
             if (storage[i].getUuid().equals(uuid)) {
