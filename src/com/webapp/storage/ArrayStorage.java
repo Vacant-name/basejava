@@ -8,39 +8,14 @@ import com.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void save(Resume resume) {
-        if (sizeStorage == storage.length) {
-            System.out.println("storage is full");
-        } else {
-            int index = searchIndex(resume.getUuid());
-            if (index >= 0) {
-                System.out.println(resume + " storage already contains this resume");
-            } else {
-                storage[sizeStorage] = resume;
-                sizeStorage++;
-                System.out.println(resume + " resume saved");
-            }
-        }
+    @Override
+    protected void insertElement(Resume resume, int index) {
+        storage[sizeStorage] = resume;
     }
 
-    public void update(Resume resume) {
-        int index = searchIndex(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-            System.out.println(resume + " resume updated");
-        } else
-            System.out.println(resume + " resume not found");
-    }
-
-    public void delete(String uuid) {
-        int index = searchIndex(uuid);
-        if (index >= 0) {
-            storage[index] = storage[sizeStorage - 1];
-            sizeStorage--;
-            System.out.println(uuid + " was deleted");
-        } else {
-            System.out.println(uuid + " resume not found");
-        }
+    @Override
+    protected void fillDeletedElement(int index) {
+        storage[index] = storage[sizeStorage - 1];
     }
 
     protected int searchIndex(String uuid) {
