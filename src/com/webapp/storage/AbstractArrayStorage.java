@@ -1,5 +1,8 @@
 package com.webapp.storage;
 
+import com.webapp.exception.ExistStorageException;
+import com.webapp.exception.NotExistStorageException;
+import com.webapp.exception.StorageException;
 import com.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -14,12 +17,14 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected int sizeStorage = 0;
 
-    public void save(Resume resume) {
+    public void save(Resume resume) throws ExistStorageException {
         int index = searchIndex(resume.getUuid());
         if (index > 0) {
-            System.out.println(resume + " storage already contains this resume");
+            throw new ExistStorageException(resume.getUuid());
+            //System.out.println(resume + " storage already contains this resume");
         } else if (sizeStorage == storage.length) {
-            System.out.println("storage is full");
+            throw new StorageException("Storage overflow", resume.getUuid());
+            //System.out.println("storage is full");
         } else {
             insertElement(resume, index);
             sizeStorage++;
@@ -30,7 +35,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = searchIndex(uuid);
         if (index < 0) {
-            System.out.println(uuid + " resume not found");
+            throw new NotExistStorageException(uuid);
+            //System.out.println(uuid + " resume not found");
         } else {
             fillDeletedElement(index);
             storage[sizeStorage - 1] = null;
@@ -41,20 +47,22 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume resume) {
         int index = searchIndex(resume.getUuid());
-        if (index >= 0) {
+        if (index < 0) {
+            throw new NotExistStorageException(resume.getUuid());
+            //System.out.println(resume + " resume not found");
+            //System.out.println(resume + " resume updated");
+        } else {
             storage[index] = resume;
-            System.out.println(resume + " resume updated");
-        } else
-            System.out.println(resume + " resume not found");
+        }
     }
 
     public Resume get(String uuid) {
         int index = searchIndex(uuid);
-        if (index >= 0) {
-            System.out.println("Resume " + uuid + " found");
-            return storage[index];
-        } else System.out.println("Resume " + uuid + " not found");
-        return null;
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+            //System.out.println("Resume " + uuid + " not found");
+        }
+        return storage[index];
     }
 
     public int size() {
