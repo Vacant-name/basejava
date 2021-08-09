@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10_000;
+    protected static final int STORAGE_LIMIT = 2;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     protected int sizeStorage = 0;
@@ -21,10 +21,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = searchIndex(resume.getUuid());
         if (index > 0) {
             throw new ExistStorageException(resume.getUuid());
-            //System.out.println(resume + " storage already contains this resume");
         } else if (sizeStorage == storage.length) {
             throw new StorageException("Storage overflow", resume.getUuid());
-            //System.out.println("storage is full");
         } else {
             insertElement(resume, index);
             sizeStorage++;
@@ -36,7 +34,6 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = searchIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-            //System.out.println(uuid + " resume not found");
         } else {
             fillDeletedElement(index);
             storage[sizeStorage - 1] = null;
@@ -49,8 +46,6 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = searchIndex(resume.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
-            //System.out.println(resume + " resume not found");
-            //System.out.println(resume + " resume updated");
         } else {
             storage[index] = resume;
         }
@@ -60,7 +55,6 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = searchIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-            //System.out.println("Resume " + uuid + " not found");
         }
         return storage[index];
     }
