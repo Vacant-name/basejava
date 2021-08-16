@@ -12,14 +12,14 @@ import java.util.Arrays;
  */
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 2;
+    protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     protected int sizeStorage = 0;
 
     public void save(Resume resume) throws ExistStorageException {
         int index = searchIndex(resume.getUuid());
-        if (index > 0) {
+        if (index >= 0) {
             throw new ExistStorageException(resume.getUuid());
         } else if (sizeStorage == storage.length) {
             throw new StorageException("Storage overflow", resume.getUuid());

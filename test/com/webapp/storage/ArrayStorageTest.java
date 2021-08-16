@@ -1,20 +1,8 @@
 package com.webapp.storage;
 
-import org.junit.Test;
+public class ArrayStorageTest extends AbstractArrayStorageTest {
 
-import static org.junit.Assert.*;
-
-public class ArrayStorageTest {
-
-    @Test
-    public void insertElement() {
-    }
-
-    @Test
-    public void fillDeletedElement() {
-    }
-
-    @Test
-    public void searchIndex() {
+    public ArrayStorageTest() {
+        super(new ArrayStorage());
     }
 }
