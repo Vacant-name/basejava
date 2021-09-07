@@ -16,6 +16,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void fillDeletedElement(int index) {
         storage[index] = storage[sizeStorage - 1];
+        storage[sizeStorage - 1] = null;
     }
 
     protected int searchIndex(String uuid) {

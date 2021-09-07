@@ -1,16 +1,17 @@
 package com.webapp;
 
+import com.webapp.exception.NotExistStorageException;
 import com.webapp.model.Resume;
-import com.webapp.storage.ArrayStorage;
+import com.webapp.storage.SortedArrayStorage;
 
 
 /**
  * Test for your com.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Resume r1 = new Resume("uuid1");
         Resume r2 = new Resume("uuid2");
         Resume r3 = new Resume("uuid3");
@@ -22,16 +23,23 @@ public class MainTestArrayStorage {
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        try {
+            System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-        printAll();
-        ARRAY_STORAGE.delete(r1.getUuid());
-        printAll();
-        ARRAY_STORAGE.clear();
-        printAll();
+            printAll();
+            ARRAY_STORAGE.delete(r1.getUuid());
+            printAll();
+            ARRAY_STORAGE.clear();
+            printAll();
 
-        System.out.println("Size: " + ARRAY_STORAGE.size());
-    }
+            System.out.println("Size: " + ARRAY_STORAGE.size());
+
+        } catch (NotExistStorageException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            printAll();
+        }
+        }
 
     static void printAll() {
         System.out.println("\nGet All");

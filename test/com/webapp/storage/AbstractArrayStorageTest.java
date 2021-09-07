@@ -8,9 +8,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
-public class AbstractArrayStorageTest {
+
+public abstract class AbstractArrayStorageTest {
 
     private final Storage storage;
 
@@ -36,12 +38,24 @@ public class AbstractArrayStorageTest {
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
+        storage.save(RESUME_4);
+    }
+
+    @Test
+    public void delete() throws Exception {
+        storage.delete((UUID_4));
+        assertSize(3);
+        try {
+            storage.get(UUID_4);
+        } catch (NotExistStorageException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
     public void size() throws Exception {
-        assertSize(3);
-     }
+        assertSize(4);
+    }
 
     @Test
     public void clear() throws Exception {
@@ -72,12 +86,12 @@ public class AbstractArrayStorageTest {
         assertGet(RESUME_4);
     }
 
-    @Test (expected = NotExistStorageException.class)
-    public void delete() throws Exception {
-        storage.delete((UUID_1));
-        assertSize(3);
-        storage.get(UUID_1);
-    }
+//    @Test
+//    public void delete() throws Exception {
+//        storage.delete((UUID_4));
+//        assertSize(3);
+//        storage.get(UUID_4);
+//    }
 
     @Test
     public void get() throws Exception {
@@ -113,7 +127,6 @@ public class AbstractArrayStorageTest {
     }
 
     private void assertSize(int sizeStorage) {
-        assertEquals(0, storage.size());
+        assertEquals(sizeStorage, storage.size());
     }
-
 }
