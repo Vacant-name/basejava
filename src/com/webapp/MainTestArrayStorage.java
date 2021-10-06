@@ -37,6 +37,6 @@ public class MainTestArrayStorage {
             System.out.println("\nGet All");
             for (Resume r : ARRAY_STORAGE.getAll()) {
                 System.out.println(r);
-            }//
+            }///
         }
 }
