@@ -5,6 +5,7 @@ import com.webapp.exception.NotExistStorageException;
 import com.webapp.exception.StorageException;
 import com.webapp.model.Resume;
 
+import java.sql.SQLOutput;
 import java.util.Arrays;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Arrays;
  */
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10_000;
+    protected static final int STORAGE_LIMIT = 10;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     protected int sizeStorage = 0;
@@ -30,7 +31,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void delete(String uuid) {
+    public void delete(String uuid) throws NotExistStorageException {
         int index = searchIndex(uuid);
         if (index <= 0) {
             throw new NotExistStorageException(uuid);
@@ -47,11 +48,12 @@ public abstract class AbstractArrayStorage implements Storage {
             throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
+            System.out.println(resume + " was updated");
         }
     }
 
     public Resume get(String uuid) {
-        int index = searchIndex(uuid); // incorrect work
+        int index = searchIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
         }
