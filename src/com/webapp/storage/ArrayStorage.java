@@ -2,6 +2,9 @@ package com.webapp.storage;
 
 import com.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Array based storage for Resumes
  */
@@ -26,15 +29,4 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         return -1;
     }
-
-//    public void saveOverflow() throws Error {
-//        try {
-//            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-//                storage.save(new Resume());
-//            }
-//        } catch (StorageException e) {
-//            Assert.fail();
-//        }
-//        storage.save(new Resume());
-//    }
 }

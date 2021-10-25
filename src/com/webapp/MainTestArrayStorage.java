@@ -1,6 +1,7 @@
 package com.webapp;
 
 import com.webapp.model.Resume;
+import com.webapp.storage.ListStorage;
 import com.webapp.storage.SortedArrayStorage;
 
 
@@ -8,7 +9,7 @@ import com.webapp.storage.SortedArrayStorage;
  * Test for your com.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
+    static final ListStorage ARRAY_STORAGE = new ListStorage();
 
         public static void main(String[] args) {
             Resume r1 = new Resume("uuid1");
@@ -39,7 +40,7 @@ public class MainTestArrayStorage {
 
         static void printAll() {
             System.out.println("\nGet All");
-            for (Resume r : ARRAY_STORAGE.getAll()) {
+            for (Resume r : ARRAY_STORAGE.getAllSorted()) {
                 System.out.println(r);
             }
         }
