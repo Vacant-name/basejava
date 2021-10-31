@@ -1,7 +1,6 @@
 package com.webapp.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -10,15 +9,16 @@ public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     private String uuid;
-    private String fullName;
 
-    public Resume(String fullName) {
-        this(UUID.randomUUID().toString(), fullName);
+    public String getUuid() {
+        return uuid;
     }
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
+    private String fullName;
 
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "uuid must not be null");
@@ -27,12 +27,20 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
     }
 
-    public String getUuid() {
-        return uuid;
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
     }
 
-    public String setUuid() {
-        return uuid;
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+
+    public String getContacts(ContactType type) {
+        return contacts.get(type);
+    }
+
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+
+    public Section getSections(SectionType type) {
+        return sections.get(type);
     }
 
     @Override

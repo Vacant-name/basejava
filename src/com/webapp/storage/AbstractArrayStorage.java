@@ -10,44 +10,45 @@ import java.util.List;
  * Array based storage for Resumes
  */
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     protected int sizeStorage = 0;
 
     @Override
-    protected void doSave(Resume resume, Object index) {
+    protected void doSave(Resume resume, Integer index) {
         if (sizeStorage == storage.length) {
-            throw new StorageException("Storage overflow", resume.getUuid());
+            throw new StorageException("Storage is overflowed", resume.getUuid());
         } else {
-            insertElement(resume, (Integer) index);
+            insertElement(resume, index);
             sizeStorage++;
-            System.out.println(resume + " resume saved");
+            System.out.println(resume + " resume was saved");
         }
     }
 
     @Override
-    protected void doDelete(Object index) {
-        fillDeletedElement((Integer) index);
+    protected void doDelete(Integer index) {
+        fillDeletedElement(index);
         storage[sizeStorage - 1] = null;
         sizeStorage--;
-        System.out.println(index + " was deleted");
+        System.out.println("uuid" + (index + 1) + " was deleted");
     }
 
     @Override
-    protected void doUpdate(Resume resume, Object index) {
+    protected void doUpdate(Resume resume, Integer index) {
         storage[(Integer) index] = resume;
+        System.out.println("uuid" + (((Integer) index) + 1) + " was updated");
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return storage[(Integer) index];
+    protected Resume doGet(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     public int size() {
