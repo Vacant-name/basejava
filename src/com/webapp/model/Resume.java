@@ -8,17 +8,16 @@ import java.util.*;
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
-    private String uuid;
+    private final String uuid;
 
-    public String getUuid() {
-        return uuid;
+    private final String fullName;
+
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
     }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    private String fullName;
 
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "uuid must not be null");
@@ -27,25 +26,24 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
     }
 
-    public Resume(String fullName) {
-        this(UUID.randomUUID().toString(), fullName);
+    public String getUuid() {
+        return uuid;
     }
 
-    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-
-    public String getContacts(ContactType type) {
+    public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
-    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
-
-    public Section getSections(SectionType type) {
+    public Section getSection(SectionType type) {
         return sections.get(type);
     }
 
-    @Override
-    public String toString() {
-        return uuid + "FullNAme";
+    public void addContact(ContactType type, String value) {
+        contacts.put(type, value);
+    }
+
+    public void addSection(SectionType type, Section section) {
+        sections.put(type, section);
     }
 
     @Override
@@ -57,6 +55,7 @@ public class Resume implements Comparable<Resume> {
 
         if (!uuid.equals(resume.uuid)) return false;
         return fullName.equals(resume.fullName);
+
     }
 
     @Override
@@ -64,6 +63,11 @@ public class Resume implements Comparable<Resume> {
         int result = uuid.hashCode();
         result = 31 * result + fullName.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return uuid + '(' + fullName + ')';
     }
 
     @Override
