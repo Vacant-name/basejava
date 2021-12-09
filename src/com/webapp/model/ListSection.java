@@ -1,11 +1,17 @@
 package com.webapp.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class ListSection extends Section {
-    private final List<String> items;
+public class ListSection extends Section implements Serializable {
+    public static final long serialVersionUID = 1L;
+
+    private List<String> items;
+
+    public ListSection() {
+    }
 
     public ListSection(String... items) {
         this(Arrays.asList(items));

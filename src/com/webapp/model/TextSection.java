@@ -1,9 +1,15 @@
 package com.webapp.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class TextSection extends Section {
-    private final String content;
+public class TextSection extends Section implements Serializable {
+    public static final long serialVersionUID = 1L;
+
+    private String content;
+
+    public TextSection() {
+    }
 
     public String getContent() {
         return content;

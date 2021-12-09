@@ -11,11 +11,12 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("C:\\Users\\nikit\\Documents\\Repositories\\basejava\\src\\com\\webapp\\storage");
+    protected static final File STORAGE_DIR = new File("C:\\Users\\nikit\\Desktop\\testStorage");
 
     protected Storage storage;
 
@@ -48,10 +49,10 @@ public abstract class AbstractStorageTest {
                                 new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2"))));
         R1.addSection(SectionType.EDUCATION,
                 new OrganizationSection(
-                        new Organization("Institute", null,
-                                new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
-                                new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty")),
-                        new Organization("Organization12", "http://Organization12.ru")));
+                    new Organization("Institute", null,
+                            new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                            new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT faculty")),
+                    new Organization("Organization12", "http://Organization12.ru")));
         R2.addContact(ContactType.SKYPE, "skype2");
         R2.addContact(ContactType.PHONE, "22222");
         R1.addSection(SectionType.EXPERIENCE,
@@ -87,7 +88,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
-        assertTrue(newResume == storage.get(UUID_1));
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test(expected = NotExistStorageException.class)
