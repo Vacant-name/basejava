@@ -1,12 +1,26 @@
 package com.webapp.util;
 
 public class LazySingleton {
-    private static final LazySingleton INSTANCE = new LazySingleton();
+    volatile private static LazySingleton INSTANCE;
 
     public LazySingleton() {
     }
 
-    public static LazySingleton getInstance() {
-        return INSTANCE;
+    private static class LazySingletonHolder {
+        private static final LazySingleton INSTANCE = new LazySingleton();
     }
+
+    public static LazySingleton getInstance() {
+        return LazySingletonHolder.INSTANCE;
+    }
+//    public static LazySingleton getInstance() {
+//        if (INSTANCE == null) {
+//            synchronized (LazySingleton.class) {
+//                if (INSTANCE == null) {
+//                    INSTANCE = new LazySingleton();
+//                }
+//            }
+//        }
+//        return INSTANCE;
+//    }
 }
